@@ -47,8 +47,20 @@ function calculateBonusByProfit(index, total, seller) {
  */
 
 function analyzeSalesData(data, options) {
+  if (!data
+    || !Array.isArray(data.sellers)
+    || data.sellers.length === 0
+  ) {
+    throw new Error('Некорректные входные данные');
+  }
+
   const { sellers, products, purchase_records: purchase } = data
   const { calculateRevenue, calculateBonus } = options
+
+  if (!calculateRevenue || !calculateBonus ) {
+    throw new Error('Чего-то не хватает');
+  }
+
   const statsBySellerId = {}
 
   const sellerIndex = sellers.reduce(
